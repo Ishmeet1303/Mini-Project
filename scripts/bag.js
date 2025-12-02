@@ -11,9 +11,13 @@ function displaybagsummary() {
     let totalitems=bagitemobjects.length;
     let totalMRP=0;
     let totalDiscount=0;
-    let finalprice=0;
-
-
+    
+     
+    bagitemobjects.forEach(bagitem => {
+        totalMRP += bagitem.original_price;
+        totalDiscount +=bagitem.original_price-bagitem.current_price; 
+    });
+    let finalprice=totalMRP-totalDiscount+99;
 
     bagsummaryElement.innerHTML = `   <div class="bag-details-container">
             <div class="price-header">PRICE DETAILS (${totalitems} Items)</div>
@@ -64,7 +68,7 @@ function displaybagitems() {
 }
 
 function removefrombag(itemId) {
-    bagitems.filter(bagitemId => bagitemId != itemId);
+     bagitems=bagitems.filter(bagitemId => bagitemId != itemId);
     localStorage.setItem('bagitems', JSON.stringify(bagitems));
     loadbagitemobjects();
     DisplayBagItemCount();
